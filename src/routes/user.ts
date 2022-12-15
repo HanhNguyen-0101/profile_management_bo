@@ -12,10 +12,10 @@ import {
   uploadAvatar,
   requestResetPassword,
 } from "./../controllers/user";
-import { User } from "../models/user";
 import authenticate from "../middlewares/validate/authenticate";
 import uploadImage from "../middlewares/upload/uploadImage";
 import checkExist from "../middlewares/validate/checkExist";
+import { User } from "../services/index.service";
 const formidableMiddleware = require("middleware-formidable");
 
 const router = express.Router();

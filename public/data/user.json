@@ -1,0 +1,62 @@
+[
+  {
+    "id": 8,
+    "email": "hanhngan01011223@gmail.com",
+    "password": "$2a$10$uRt7qtBmWXjHEo3HoeTb..GW9UyoIwCtfTKLpnudC.5Brwt5TXSM2",
+    "avatar": 34,
+    "status": 13,
+    "resetPasswordStatus": 17,
+    "createdAt": "2022-11-29T11:23:19.000Z",
+    "updatedAt": "2022-12-01T04:14:43.000Z"
+  },
+  {
+    "id": 9,
+    "email": "hanhngan0102@gmail.com",
+    "password": "$2a$10$14EL127T6AYEAm5Y9/icauwwUJ5iZP9MuA6a/p41lyR9k6X1R0/yW",
+    "avatar": 28,
+    "status": 14,
+    "resetPasswordStatus": 18,
+    "createdAt": "2022-11-30T06:59:18.000Z",
+    "updatedAt": "2022-11-30T10:53:43.000Z"
+  },
+  {
+    "id": 10,
+    "email": "hanh@gmail.com",
+    "password": "$2a$10$ibo/xNV9aLGdJi9riDc.3ec5fv8tiOp4.HLh73EU/ppJJTB59atRC",
+    "avatar": 28,
+    "status": 13,
+    "resetPasswordStatus": 17,
+    "createdAt": "2022-11-30T10:33:17.000Z",
+    "updatedAt": "2022-12-01T10:43:46.000Z"
+  },
+  {
+    "id": 11,
+    "email": "hanh1ngan@yopmail.com",
+    "password": "$2a$10$56FKy6Y9cqGn5pRDjXROYulPjOad2Z8zbDHg4pNqdFW9kBVA7Pqn.",
+    "avatar": 28,
+    "status": 12,
+    "resetPasswordStatus": 18,
+    "createdAt": "2022-11-30T10:41:56.000Z",
+    "updatedAt": "2022-12-01T03:44:04.000Z"
+  },
+  {
+    "id": 12,
+    "email": "hanh@yopmail.com",
+    "password": "$2a$10$p.OxGMJU3HAJKKh8UC6co.QXoMOtIF6q/kYcZflFv.DvxcSt50sO6",
+    "avatar": null,
+    "status": 12,
+    "resetPasswordStatus": 17,
+    "createdAt": "2022-11-30T10:43:13.000Z",
+    "updatedAt": "2022-11-30T10:43:13.000Z"
+  },
+  {
+    "id": 14,
+    "email": "hanh1@yopmail.com",
+    "password": "$2a$10$TRiXFSRoOProXkIWy8qxUOEwSdkHFg3oqT7sV0M8/R1XF2PxSF9BG",
+    "avatar": null,
+    "status": 12,
+    "resetPasswordStatus": 17,
+    "createdAt": "2022-11-30T11:07:49.000Z",
+    "updatedAt": "2022-11-30T11:09:00.000Z"
+  }
+]

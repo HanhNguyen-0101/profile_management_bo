@@ -1,11 +1,9 @@
 import { RequestHandler } from "express";
-import { Category } from "../models/category";
-import { Op } from "sequelize";
-import { SubCategory } from "../models/subCategory";
+import { Category, SubCategory } from "../services/index.service";
 
 export const getAll: RequestHandler = async (req, res, next) => {
   try {
-    const all: Category[] = await Category.findAll();
+    const all: Array<any> = await Category.findAll({});
     return res.status(200).json({ message: "Fetched successfully", data: all });
   } catch (error) {
     return res.status(500).send(error);
@@ -14,7 +12,9 @@ export const getAll: RequestHandler = async (req, res, next) => {
 export const getById: RequestHandler = async (req, res, next) => {
   const { id } = req.params;
   try {
-    const item: Category | null = await Category.findByPk(id);
+    const item: any = await Category.findOne({
+      where: { key: "id", value: id },
+    });
     return res
       .status(200)
       .json({ message: "Fetched successfully", data: item });
@@ -25,19 +25,11 @@ export const getById: RequestHandler = async (req, res, next) => {
 export const findByKeyword: RequestHandler = async (req, res, next) => {
   const { keyword } = req.params;
   try {
-    const result: Category[] = await Category.findAll({
+    const result: Array<any> = await Category.findAll({
       where: {
-        [Op.or]: [
-          {
-            name: {
-              [Op.like]: `%${keyword}%`,
-            },
-          },
-          {
-            description: {
-              [Op.like]: `%${keyword}%`,
-            },
-          },
+        or: [
+          { where: { key: "name", value: keyword, like: true } },
+          { where: { key: "description", value: keyword, like: true } },
         ],
       },
     });
@@ -51,8 +43,8 @@ export const findByKeyword: RequestHandler = async (req, res, next) => {
 export const remove: RequestHandler = async (req, res, next) => {
   const { id } = req.params;
   try {
-    await Category.destroy({ where: { id } });
-    await SubCategory.destroy({ where: { categoryId: id } });
+    await Category.destroy({ where: { key: "id", value: id } });
+    await SubCategory.destroy({ where: { key: "categoryId", value: id } });
 
     return res.status(200).json({
       message: "Deleted successfully",
@@ -67,7 +59,7 @@ export const remove: RequestHandler = async (req, res, next) => {
 export const create: RequestHandler = async (req, res, next) => {
   const { name, description } = req.body;
   try {
-    const newItem: Category = await Category.create({
+    const newItem: any = await Category.create({
       name,
       description,
     });
@@ -82,7 +74,9 @@ export const update: RequestHandler = async (req, res, next) => {
   const { name, description } = req.body;
   const { id } = req.params;
   try {
-    const updated: Category | null = await Category.findByPk(id);
+    const updated: any = await Category.findOne({
+      where: { key: "id", value: id },
+    });
     if (updated) {
       updated.name = name || updated?.name;
       updated.description = description || updated?.description;

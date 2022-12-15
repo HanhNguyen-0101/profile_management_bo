@@ -7,9 +7,9 @@ import {
   getById,
   findByKeyword,
 } from "./../controllers/contact";
-import { Contact } from "../models/contact";
 import authenticate from "../middlewares/validate/authenticate";
 import checkExist from "../middlewares/validate/checkExist";
+import { Contact } from "../services/index.service";
 
 const router = express.Router();
 

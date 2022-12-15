@@ -1,14 +1,27 @@
 import { RequestHandler } from "express";
-import { Project } from "../models/project";
-import { Op } from "sequelize";
-import { SubCategory } from "../models/subCategory";
-import { Organization } from "../models/organization";
-import { Category } from "../models/category";
+import {
+  Project,
+  SubCategory,
+  Organization,
+  Category,
+} from "../services/index.service";
 
 export const getAll: RequestHandler = async (req, res, next) => {
   try {
-    const all: Project[] = await Project.findAll({
-      include: [{model: SubCategory, include: [Category]}, Organization],
+    const all: Array<any> = await Project.findAll({
+      include: [
+        {
+          model: SubCategory,
+          as: "subCategory",
+          map: "subCategoryId",
+          include: [{ model: Category, as: "category", map: "categoryId" }],
+        },
+        {
+          model: Organization,
+          as: "organization",
+          map: "organizationId",
+        },
+      ],
     });
     return res.status(200).json({ message: "Fetched successfully", data: all });
   } catch (error) {
@@ -18,8 +31,21 @@ export const getAll: RequestHandler = async (req, res, next) => {
 export const getById: RequestHandler = async (req, res, next) => {
   const { id } = req.params;
   try {
-    const item: Project | null = await Project.findByPk(id, {
-      include: [{model: SubCategory, include: [Category]}, Organization],
+    const item: any = await Project.findOne({
+      where: { key: "id", value: id },
+      include: [
+        {
+          model: SubCategory,
+          as: "subCategory",
+          map: "subCategoryId",
+          include: [{ model: Category, as: "category", map: "categoryId" }],
+        },
+        {
+          model: Organization,
+          as: "organization",
+          map: "organizationId",
+        },
+      ],
     });
     return res
       .status(200)
@@ -31,20 +57,24 @@ export const getById: RequestHandler = async (req, res, next) => {
 export const findByKeyword: RequestHandler = async (req, res, next) => {
   const { keyword } = req.params;
   try {
-    const result: Project[] = await Project.findAll({
-      include: [{model: SubCategory, include: [Category]}, Organization],
+    const result: Array<any> = await Project.findAll({
+      include: [
+        {
+          model: SubCategory,
+          as: "subCategory",
+          map: "subCategoryId",
+          include: [{ model: Category, as: "category", map: "categoryId" }],
+        },
+        {
+          model: Organization,
+          as: "organization",
+          map: "organizationId",
+        },
+      ],
       where: {
-        [Op.or]: [
-          {
-            name: {
-              [Op.like]: `%${keyword}%`,
-            },
-          },
-          {
-            description: {
-              [Op.like]: `%${keyword}%`,
-            },
-          },
+        or: [
+          { where: { key: "name", value: keyword, like: true } },
+          { where: { key: "description", value: keyword, like: true } },
         ],
       },
     });
@@ -58,7 +88,7 @@ export const findByKeyword: RequestHandler = async (req, res, next) => {
 export const remove: RequestHandler = async (req, res, next) => {
   const { id } = req.params;
   try {
-    await Project.destroy({ where: { id } });
+    await Project.destroy({ where: { key: "id", value: id } });
     return res.status(200).json({
       message: "Deleted successfully",
       data: { message: `Delete ID: ${id} is successfully` },
@@ -80,7 +110,7 @@ export const create: RequestHandler = async (req, res, next) => {
     subCategoryId,
   } = req.body;
   try {
-    const newItem: Project = await Project.create({
+    const newItem: any = await Project.create({
       name,
       link,
       description,
@@ -112,7 +142,9 @@ export const update: RequestHandler = async (req, res, next) => {
   } = req.body;
   const { id } = req.params;
   try {
-    const updated: Project | null = await Project.findByPk(id);
+    const updated: any = await Project.findOne({
+      where: { key: "id", value: id },
+    });
     if (updated) {
       updated.name = name || updated?.name;
       updated.description = description || updated?.description;
@@ -123,7 +155,7 @@ export const update: RequestHandler = async (req, res, next) => {
       updated.images = images || updated?.images;
       updated.organizationId = organizationId || updated?.organizationId;
       updated.subCategoryId = subCategoryId || updated?.subCategoryId;
-      await updated.save();
+      await Project.update(id, updated);
       return res
         .status(200)
         .json({ message: "Updated successfully", data: updated });

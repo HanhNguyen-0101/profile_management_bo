@@ -1,10 +1,10 @@
 import { RequestHandler } from "express";
-import { Skill } from "../models/skill";
 import { Op } from "sequelize";
+import { Skill } from "../services/index.service";
 
 export const getAll: RequestHandler = async (req, res, next) => {
   try {
-    const all: Skill[] = await Skill.findAll();
+    const all: Array<any> = await Skill.findAll({});
     return res.status(200).json({ message: "Fetched successfully", data: all });
   } catch (error) {
     return res.status(500).send(error);
@@ -13,7 +13,9 @@ export const getAll: RequestHandler = async (req, res, next) => {
 export const getById: RequestHandler = async (req, res, next) => {
   const { id } = req.params;
   try {
-    const item: Skill | null = await Skill.findByPk(id);
+    const item: any = await Skill.findOne({
+      where: { key: "id", value: id },
+    });
     return res
       .status(200)
       .json({ message: "Fetched successfully", data: item });
@@ -24,19 +26,11 @@ export const getById: RequestHandler = async (req, res, next) => {
 export const findByKeyword: RequestHandler = async (req, res, next) => {
   const { keyword } = req.params;
   try {
-    const result: Skill[] = await Skill.findAll({
+    const result: Array<any> = await Skill.findAll({
       where: {
-        [Op.or]: [
-          {
-            name: {
-              [Op.like]: `%${keyword}%`,
-            },
-          },
-          {
-            description: {
-              [Op.like]: `%${keyword}%`,
-            },
-          },
+        or: [
+          { where: { key: "name", value: keyword, like: true } },
+          { where: { key: "description", value: keyword, like: true } },
         ],
       },
     });
@@ -50,7 +44,7 @@ export const findByKeyword: RequestHandler = async (req, res, next) => {
 export const remove: RequestHandler = async (req, res, next) => {
   const { id } = req.params;
   try {
-    await Skill.destroy({ where: { id } });
+    await Skill.destroy({ where: { key: "id", value: id } });
     return res.status(200).json({
       message: "Deleted successfully",
       data: { message: `Delete ID: ${id} is successfully` },
@@ -62,10 +56,10 @@ export const remove: RequestHandler = async (req, res, next) => {
 export const create: RequestHandler = async (req, res, next) => {
   const { name, description, rate } = req.body;
   try {
-    const newItem: Skill = await Skill.create({
+    const newItem: any = await Skill.create({
       name,
       description,
-      rate
+      rate,
     });
     return res
       .status(201)
@@ -78,12 +72,14 @@ export const update: RequestHandler = async (req, res, next) => {
   const { name, description, rate } = req.body;
   const { id } = req.params;
   try {
-    const updated: Skill | null = await Skill.findByPk(id);
+    const updated: any = await Skill.findOne({
+      where: { key: "id", value: id },
+    });
     if (updated) {
       updated.name = name || updated?.name;
       updated.description = description || updated?.description;
       updated.rate = rate || updated?.rate;
-      await updated.save();
+      await Skill.update(id, updated);
       return res
         .status(200)
         .json({ message: "Updated successfully", data: updated });

@@ -1,0 +1,50 @@
+[
+  {
+    "id": 1,
+    "name": "HTML",
+    "description": "<p>HTML is the standard markup language for creating Web pages.</p><ul><li>HTML stands for Hyper Text Markup Language</li><li>HTML is the standard markup language for creating Web pages</li><li>HTML describes the structure of a Web page</li><li>HTML consists of a series of elements</li><li>HTML elements tell the browser how to display the content</li><li>HTML elements label pieces of content such as \"this is a heading\", \"this is a paragraph\", \"this is a link\", etc.</li></ul>",
+    "rate": 90,
+    "createdAt": "2022-11-24T09:44:14.000Z",
+    "updatedAt": "2022-12-02T04:55:14.000Z"
+  },
+  {
+    "id": 2,
+    "name": "CSS",
+    "description": "<p>CSS is the language we use to style a Web page.</p><ul><li>CSS stands for Cascading Style Sheets</li><li>CSS describes how HTML elements are to be displayed on screen, paper, or in other media</li><li>CSS saves a lot of work. It can control the layout of multiple web pages all at once</li><li>External stylesheets are stored in CSS files</li></ul>",
+    "rate": 95,
+    "createdAt": "2022-11-24T09:44:57.000Z",
+    "updatedAt": "2022-12-02T04:55:43.000Z"
+  },
+  {
+    "id": 3,
+    "name": "Javascript",
+    "description": "<p>JavaScript is the world's most popular programming language.</p><p>JavaScript is the programming language of the Web.</p>",
+    "rate": 90,
+    "createdAt": "2022-11-24T09:45:12.000Z",
+    "updatedAt": "2022-12-02T04:57:06.000Z"
+  },
+  {
+    "id": 4,
+    "name": "ReactJS",
+    "description": "<ul><li>React, sometimes referred to as a frontend JavaScript framework, is a JavaScript library created by Facebook.</li><li>React is a tool for building UI components.</li><li>React creates a VIRTUAL DOM in memory.</li><li>React only changes what needs to be changed!</li></ul>",
+    "rate": 95,
+    "createdAt": "2022-11-24T09:45:30.000Z",
+    "updatedAt": "2022-12-02T04:53:06.000Z"
+  },
+  {
+    "id": 5,
+    "name": "Typescript",
+    "description": "<p>TypeScript being a \"Syntactic Superset\" means that it shares the same base syntax as JavaScript, but adds something to it.</p><p><br></p><p>TypeScript uses compile time type checking. Which means it checks if the specified types match&nbsp;<strong>before</strong>&nbsp;running the code, not&nbsp;<strong>while</strong>&nbsp;running the code.</p>",
+    "rate": 80,
+    "createdAt": "2022-11-24T09:45:54.000Z",
+    "updatedAt": "2022-12-02T04:51:34.000Z"
+  },
+  {
+    "id": 6,
+    "name": "NodeJS",
+    "description": "<ul><li>Node.js is an open source server environment</li><li>Node.js is free</li><li>Node.js runs on various platforms (Windows, Linux, Unix, Mac OS X, etc.)</li><li>Node.js uses JavaScript on the server</li></ul><p><br></p><p><strong>Node.js uses asynchronous programming!</strong></p>",
+    "rate": 85,
+    "createdAt": "2022-11-24T09:46:10.000Z",
+    "updatedAt": "2022-12-02T04:54:04.000Z"
+  }
+]

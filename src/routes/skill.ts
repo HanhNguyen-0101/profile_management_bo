@@ -7,9 +7,9 @@ import {
   getById,
   findByKeyword,
 } from "./../controllers/skill";
-import { Skill } from "../models/skill";
 import authenticate from "../middlewares/validate/authenticate";
 import checkExist from "../middlewares/validate/checkExist";
+import { Skill } from "../services/index.service";
 
 const router = express.Router();
 

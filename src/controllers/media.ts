@@ -1,17 +1,24 @@
 import { RequestHandler } from "express";
-import { Media } from "../models/media";
-import { Op } from "sequelize";
-import { SubCategory } from "../models/subCategory";
-import { Category } from "../models/category";
-import path from "path";
-import { Blog } from "../models/blog";
-import { User } from "../models/user";
-import { Project } from "../models/project";
+import {
+  Media,
+  SubCategory,
+  Category,
+  Blog,
+  User,
+  Project,
+} from "../services/index.service";
 
 export const getAll: RequestHandler = async (req, res, next) => {
   try {
-    const all: Media[] = await Media.findAll({
-      include: [{ model: SubCategory, include: [Category] }],
+    const all: Array<any> = await Media.findAll({
+      include: [
+        {
+          model: SubCategory,
+          as: "subCategory",
+          map: "subCategoryId",
+          include: [{ model: Category, as: "category", map: "categoryId" }],
+        },
+      ],
     });
     return res.status(200).json({ message: "Fetched successfully", data: all });
   } catch (error) {
@@ -21,8 +28,16 @@ export const getAll: RequestHandler = async (req, res, next) => {
 export const getById: RequestHandler = async (req, res, next) => {
   const { id } = req.params;
   try {
-    const item: Media | null = await Media.findByPk(id, {
-      include: [{ model: SubCategory, include: [Category] }],
+    const item: any = await Media.findOne({
+      where: { key: "id", value: id },
+      include: [
+        {
+          model: SubCategory,
+          as: "subCategory",
+          map: "subCategoryId",
+          include: [{ model: Category, as: "category", map: "categoryId" }],
+        },
+      ],
     });
     return res
       .status(200)
@@ -34,20 +49,19 @@ export const getById: RequestHandler = async (req, res, next) => {
 export const findByKeyword: RequestHandler = async (req, res, next) => {
   const { keyword } = req.params;
   try {
-    const result: Media[] = await Media.findAll({
-      include: [{ model: SubCategory, include: [Category] }],
+    const result: Array<any> = await Media.findAll({
+      include: [
+        {
+          model: SubCategory,
+          as: "subCategory",
+          map: "subCategoryId",
+          include: [{ model: Category, as: "category", map: "categoryId" }],
+        },
+      ],
       where: {
-        [Op.or]: [
-          {
-            title: {
-              [Op.like]: `%${keyword}%`,
-            },
-          },
-          {
-            description: {
-              [Op.like]: `%${keyword}%`,
-            },
-          },
+        or: [
+          { where: { key: "title", value: keyword, like: true } },
+          { where: { key: "description", value: keyword, like: true } },
         ],
       },
     });
@@ -61,21 +75,15 @@ export const findByKeyword: RequestHandler = async (req, res, next) => {
 export const remove: RequestHandler = async (req, res, next) => {
   const { id } = req.params;
   try {
-    await Media.destroy({ where: { id } });
-    await Blog.destroy({ where: { thumnail: id } });
-    await User.destroy({ where: { avatar: id } });
+    await Media.destroy({ where: { key: "id", value: id } });
+    await Blog.destroy({ where: { key: "thumnail", value: id } });
+    await User.destroy({ where: { key: "avatar", value: id } });
     const projects = await Project.findAll({
-      where: {
-        images: {
-          [Op.like]: `%${id}%`,
-        },
-      },
+      where: { key: "images", value: id, like: true },
     });
     projects?.map(async (p: any) => {
       const project = await Project.findOne({
-        where: {
-          id: p.id,
-        },
+        where: { key: "id", value: p.id },
       });
       if (
         project &&
@@ -88,7 +96,7 @@ export const remove: RequestHandler = async (req, res, next) => {
           arr.splice(index, 1);
         }
         project.images = arr.length > 0 ? JSON.stringify(arr) : "";
-        await project.save();
+        await Project.update(project);
       }
     });
     return res.status(200).json({
@@ -104,7 +112,7 @@ export const remove: RequestHandler = async (req, res, next) => {
 export const create: any = async (req: any, res: any, next: any) => {
   const { enabled, title, description, subCategoryId } = req.fields;
   try {
-    const newItem: Media = await Media.create({
+    const newItem: any = await Media.create({
       src: req.file || "",
       enabled: enabled === "true",
       title,
@@ -122,14 +130,16 @@ export const update: any = async (req: any, res: any, next: any) => {
   const { enabled, title, description, subCategoryId } = req.fields;
   const { id } = req.params;
   try {
-    const updated: Media | null = await Media.findByPk(id);
+    const updated: any = await Media.findOne({
+      where: { key: "id", value: id },
+    });
     if (updated) {
       updated.src = req.file || updated.src;
       updated.description = description;
       updated.title = title;
       updated.enabled = enabled;
       updated.subCategoryId = subCategoryId;
-      await updated.save();
+      await Media.update(id, updated);
       return res
         .status(200)
         .json({ message: "Updated successfully", data: updated });
@@ -137,6 +147,6 @@ export const update: any = async (req: any, res: any, next: any) => {
       create;
     }
   } catch (error) {
-  return res.status(500).send(error);
+    return res.status(500).send(error);
   }
 };

@@ -4,7 +4,7 @@ const checkExist = (Model: any) => {
   const result: RequestHandler = async (req, res, next) => {
     const { id } = req.params;
     try {
-      const result = await Model.findByPk(id);
+      const result = await Model.findOne({ where: { key: "id", value: id } });
       if (result) {
         next();
       } else {

@@ -1,0 +1,114 @@
+[
+  {
+    "id": 4,
+    "name": "Working",
+    "description": "<p>The projects have been finished in working.</p>",
+    "categoryId": 3,
+    "createdAt": "2022-11-24T08:19:36.000Z",
+    "updatedAt": "2022-12-02T04:06:08.000Z"
+  },
+  {
+    "id": 5,
+    "name": "Learning",
+    "description": "<p>The projects have been finished in the improve skills of yourself.</p>",
+    "categoryId": 3,
+    "createdAt": "2022-11-24T08:19:53.000Z",
+    "updatedAt": "2022-12-02T04:07:43.000Z"
+  },
+  {
+    "id": 6,
+    "name": "Timelife",
+    "description": "<p>The events have happened in your life.</p>",
+    "categoryId": 3,
+    "createdAt": "2022-11-24T08:40:51.000Z",
+    "updatedAt": "2022-12-02T04:06:03.000Z"
+  },
+  {
+    "id": 7,
+    "name": "PDF",
+    "description": "<p>The PDF files.</p>",
+    "categoryId": 12,
+    "createdAt": "2022-11-24T08:41:33.000Z",
+    "updatedAt": "2022-12-02T04:08:23.000Z"
+  },
+  {
+    "id": 8,
+    "name": "IMG",
+    "description": "<p>The images such as .png, .jpg, .jpeg.</p>",
+    "categoryId": 12,
+    "createdAt": "2022-11-24T08:41:46.000Z",
+    "updatedAt": "2022-12-02T04:10:33.000Z"
+  },
+  {
+    "id": 9,
+    "name": "MP3",
+    "description": "<p>The audio files.</p>",
+    "categoryId": 12,
+    "createdAt": "2022-11-24T08:41:50.000Z",
+    "updatedAt": "2022-12-02T04:08:40.000Z"
+  },
+  {
+    "id": 10,
+    "name": "Lifestyle",
+    "description": "<p>The articles talk about your lifestyle.</p>",
+    "categoryId": 10,
+    "createdAt": "2022-11-24T08:42:07.000Z",
+    "updatedAt": "2022-12-02T04:12:25.000Z"
+  },
+  {
+    "id": 11,
+    "name": "Development",
+    "description": "<p>The articles talk about development. </p>",
+    "categoryId": 10,
+    "createdAt": "2022-11-24T08:42:19.000Z",
+    "updatedAt": "2022-12-02T04:12:17.000Z"
+  },
+  {
+    "id": 12,
+    "name": "User: Waiting",
+    "description": "<p>This status appears when the account is waiting for the approval of the admin.</p><p><br></p><p>P/S: The account can access to sign in, signup, reset the password, and update the profile.</p>",
+    "categoryId": 13,
+    "createdAt": "2022-11-24T08:42:33.000Z",
+    "updatedAt": "2022-12-02T04:18:17.000Z"
+  },
+  {
+    "id": 13,
+    "name": "User: Approve",
+    "description": "<p>This status appears when the account is approved by the admin and became a new admin.</p><p><br></p><p>P/S: The account can access to update all data.</p>",
+    "categoryId": 13,
+    "createdAt": "2022-11-24T08:42:42.000Z",
+    "updatedAt": "2022-12-02T04:18:46.000Z"
+  },
+  {
+    "id": 14,
+    "name": "User: Ignore",
+    "description": "<p>This status appears when the admin rejected this account.</p>",
+    "categoryId": 13,
+    "createdAt": "2022-11-24T08:42:50.000Z",
+    "updatedAt": "2022-12-02T04:15:36.000Z"
+  },
+  {
+    "id": 16,
+    "name": "Request: None",
+    "description": "<p>No request for reset password.</p>",
+    "categoryId": 14,
+    "createdAt": "2022-11-29T10:25:34.000Z",
+    "updatedAt": "2022-12-02T04:20:42.000Z"
+  },
+  {
+    "id": 17,
+    "name": "Request: Waiting",
+    "description": "<p>The request is waiting for approval and set a new password.</p>",
+    "categoryId": 14,
+    "createdAt": "2022-11-29T10:26:14.000Z",
+    "updatedAt": "2022-12-02T04:20:15.000Z"
+  },
+  {
+    "id": 18,
+    "name": "Request: Approved",
+    "description": "<p>The request was approved and set a new password.</p>",
+    "categoryId": 14,
+    "createdAt": "2022-11-29T10:26:14.000Z",
+    "updatedAt": "2022-12-02T04:21:34.000Z"
+  }
+]

@@ -1,0 +1,37 @@
+[
+  {
+    "id": 3,
+    "name": "Project",
+    "description": "<p>project category</p>",
+    "createdAt": "2022-11-24T03:34:04.000Z",
+    "updatedAt": "2022-12-02T04:02:28.000Z"
+  },
+  {
+    "id": 10,
+    "name": "Blog",
+    "description": "<p>blog category</p>",
+    "createdAt": "2022-11-24T05:19:32.000Z",
+    "updatedAt": "2022-12-02T04:02:56.000Z"
+  },
+  {
+    "id": 12,
+    "name": "Media",
+    "description": "<p>media category</p>",
+    "createdAt": "2022-11-24T05:40:06.000Z",
+    "updatedAt": "2022-12-02T04:02:51.000Z"
+  },
+  {
+    "id": 13,
+    "name": "User",
+    "description": "<p>user category</p>",
+    "createdAt": "2022-11-24T05:46:43.000Z",
+    "updatedAt": "2022-12-02T04:03:04.000Z"
+  },
+  {
+    "id": 14,
+    "name": "Reset Password",
+    "description": "<p>reset password category</p>",
+    "createdAt": "2022-11-25T10:37:26.000Z",
+    "updatedAt": "2022-12-02T04:02:42.000Z"
+  }
+]

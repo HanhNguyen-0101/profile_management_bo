@@ -1,0 +1,65 @@
+[
+  {
+    "id": 1,
+    "name": "Linkedin",
+    "content": "linkedin.com",
+    "createdAt": "2022-11-24T10:05:19.000Z",
+    "updatedAt": "2022-11-24T10:05:19.000Z"
+  },
+  {
+    "id": 2,
+    "name": "Github",
+    "content": "https://github.com",
+    "createdAt": "2022-11-24T10:06:41.000Z",
+    "updatedAt": "2022-11-24T10:06:41.000Z"
+  },
+  {
+    "id": 3,
+    "name": "Facebook",
+    "content": "https://facebook.com",
+    "createdAt": "2022-11-24T10:07:01.000Z",
+    "updatedAt": "2022-11-24T10:07:01.000Z"
+  },
+  {
+    "id": 4,
+    "name": "Skype",
+    "content": "https://skype.com",
+    "createdAt": "2022-11-24T10:07:18.000Z",
+    "updatedAt": "2022-11-24T10:07:18.000Z"
+  },
+  {
+    "id": 5,
+    "name": "Address",
+    "content": "District 12, Ho Chi Minh city",
+    "createdAt": "2022-11-24T10:07:19.000Z",
+    "updatedAt": "2022-11-24T10:10:08.000Z"
+  },
+  {
+    "id": 6,
+    "name": "Email",
+    "content": "nthhanh111994@gmail.com",
+    "createdAt": "2022-11-24T10:07:46.000Z",
+    "updatedAt": "2022-11-24T10:07:46.000Z"
+  },
+  {
+    "id": 7,
+    "name": "Phone",
+    "content": "+84 3 898 00 670",
+    "createdAt": "2022-11-24T10:08:27.000Z",
+    "updatedAt": "2022-11-24T10:08:27.000Z"
+  },
+  {
+    "id": 8,
+    "name": "Name",
+    "content": "Hanh Nguyen",
+    "createdAt": "2022-11-24T10:08:57.000Z",
+    "updatedAt": "2022-11-24T10:08:57.000Z"
+  },
+  {
+    "id": 9,
+    "name": "Date of Birth",
+    "content": "January 01, 1994",
+    "createdAt": "2022-11-24T10:09:21.000Z",
+    "updatedAt": "2022-11-24T10:09:21.000Z"
+  }
+]

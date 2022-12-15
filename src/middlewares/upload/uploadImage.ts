@@ -1,5 +1,6 @@
 import fs from "fs";
 import mkdirp from "mkdirp";
+import { DOMAIN } from "../../utils/constants";
 
 const isFileValid = (file: any) => {
   const type = file.src.mimetype.split("/").pop();
@@ -29,11 +30,7 @@ const uploadImage = () => {
           req.files?.src.originalFilename;
         var rawData = fs.readFileSync(oldPath);
         await fs.writeFileSync(newPath, rawData);
-        req.file =
-          "http://localhost:3001/images/" +
-          uniqueSuffix +
-          "-" +
-          req.files?.src.originalFilename;
+        req.file = `${DOMAIN}/images/${uniqueSuffix}-${req.files?.src.originalFilename}`;
         next();
       }
     } else {

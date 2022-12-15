@@ -8,10 +8,9 @@ import {
   findByKeyword,
   getBySubCategoryId,
 } from "./../controllers/blog";
-import { Blog } from "../models/blog";
 import authenticate from "../middlewares/validate/authenticate";
 import checkExist from "../middlewares/validate/checkExist";
-import { SubCategory } from "../models/subCategory";
+import { Blog, SubCategory } from "../services/index.service";
 
 const router = express.Router();
 

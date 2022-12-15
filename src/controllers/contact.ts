@@ -1,10 +1,9 @@
 import { RequestHandler } from "express";
-import { Contact } from "../models/contact";
-import { Op } from "sequelize";
+import { Contact } from "../services/index.service";
 
 export const getAll: RequestHandler = async (req, res, next) => {
   try {
-    const all: Contact[] = await Contact.findAll();
+    const all: Array<any> = await Contact.findAll({});
     return res.status(200).json({ message: "Fetched successfully", data: all });
   } catch (error) {
     return res.status(500).send(error);
@@ -13,7 +12,9 @@ export const getAll: RequestHandler = async (req, res, next) => {
 export const getById: RequestHandler = async (req, res, next) => {
   const { id } = req.params;
   try {
-    const item: Contact | null = await Contact.findByPk(id);
+    const item: any = await Contact.findOne({
+      where: { key: "id", value: id },
+    });
     return res
       .status(200)
       .json({ message: "Fetched successfully", data: item });
@@ -24,12 +25,8 @@ export const getById: RequestHandler = async (req, res, next) => {
 export const findByKeyword: RequestHandler = async (req, res, next) => {
   const { keyword } = req.params;
   try {
-    const result: Contact[] = await Contact.findAll({
-      where: {
-        name: {
-          [Op.like]: `%${keyword}%`,
-        },
-      },
+    const result: Array<any> = await Contact.findAll({
+      where: { key: "name", value: keyword, like: true },
     });
     return res
       .status(200)
@@ -41,7 +38,7 @@ export const findByKeyword: RequestHandler = async (req, res, next) => {
 export const remove: RequestHandler = async (req, res, next) => {
   const { id } = req.params;
   try {
-    await Contact.destroy({ where: { id } });
+    await Contact.destroy({ where: { key: "id", value: id } });
     return res.status(200).json({
       message: "Deleted successfully",
       data: { message: `Delete ID: ${id} is successfully` },
@@ -53,7 +50,7 @@ export const remove: RequestHandler = async (req, res, next) => {
 export const create: RequestHandler = async (req, res, next) => {
   const { name, content } = req.body;
   try {
-    const newItem: Contact = await Contact.create({
+    const newItem: any = await Contact.create({
       name,
       content,
     });
@@ -68,7 +65,9 @@ export const update: RequestHandler = async (req, res, next) => {
   const { name, content } = req.body;
   const { id } = req.params;
   try {
-    const updated: Contact | null = await Contact.findByPk(id);
+    const updated: any = await Contact.findOne({
+      where: { key: "id", value: id },
+    });
     if (updated) {
       updated.name = name || updated?.name;
       updated.content = content || updated?.content;

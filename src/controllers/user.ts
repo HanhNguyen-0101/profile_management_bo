@@ -1,36 +1,35 @@
 import { RequestHandler } from "express";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import { User } from "../models/user";
-import { Op, Sequelize } from "sequelize";
-import sequelize from "sequelize";
+import { User, SubCategory, Media, Category } from "../services/index.service";
 import { SECRET } from "../utils/constants";
-import { SubCategory } from "../models/subCategory";
-import { Media } from "../models/media";
-import { Category } from "../models/category";
-import path from "path";
 
 export const getAll: RequestHandler = async (req, res, next) => {
   try {
-    const all: User[] = await User.findAll({
+    const all: Array<any> = await User.findAll({
       include: [
         {
           model: SubCategory,
           as: "statusObj",
-          include: [Category],
+          map: "status",
+          include: [{ model: Category, as: "category", map: "categoryId" }],
         },
         {
           model: SubCategory,
           as: "resetPasswordStatusObj",
-          include: [Category],
+          map: "resetPasswordStatus",
+          include: [{ model: Category, as: "category", map: "categoryId" }],
         },
         {
           model: Media,
           as: "avatarObj",
+          map: "avatar",
           include: [
             {
               model: SubCategory,
-              include: [Category],
+              as: "subCategory",
+              map: "subCategoryId",
+              include: [{ model: Category, as: "category", map: "categoryId" }],
             },
           ],
         },
@@ -44,25 +43,31 @@ export const getAll: RequestHandler = async (req, res, next) => {
 export const getById: RequestHandler = async (req, res, next) => {
   const { id } = req.params;
   try {
-    const item = await User.findByPk(id, {
+    const item = await User.findOne({
+      where: { key: "id", value: id },
       include: [
         {
           model: SubCategory,
           as: "statusObj",
-          include: [Category],
+          map: "status",
+          include: [{ model: Category, as: "category", map: "categoryId" }],
         },
         {
           model: SubCategory,
           as: "resetPasswordStatusObj",
-          include: [Category],
+          map: "resetPasswordStatus",
+          include: [{ model: Category, as: "category", map: "categoryId" }],
         },
         {
           model: Media,
           as: "avatarObj",
+          map: "avatar",
           include: [
             {
               model: SubCategory,
-              include: [Category],
+              as: "subCategory",
+              map: "subCategoryId",
+              include: [{ model: Category, as: "category", map: "categoryId" }],
             },
           ],
         },
@@ -78,30 +83,31 @@ export const getById: RequestHandler = async (req, res, next) => {
 export const findByKeyword: RequestHandler = async (req, res, next) => {
   const { keyword } = req.params;
   try {
-    const result: User[] = await User.findAll({
-      where: {
-        email: {
-          [Op.like]: `%${keyword}%`,
-        },
-      },
+    const result: Array<any> = await User.findAll({
+      where: { key: "email", value: keyword, like: true },
       include: [
         {
           model: SubCategory,
           as: "statusObj",
-          include: [Category],
+          map: "status",
+          include: [{ model: Category, as: "category", map: "categoryId" }],
         },
         {
           model: SubCategory,
           as: "resetPasswordStatusObj",
-          include: [Category],
+          map: "resetPasswordStatus",
+          include: [{ model: Category, as: "category", map: "categoryId" }],
         },
         {
           model: Media,
           as: "avatarObj",
+          map: "avatar",
           include: [
             {
               model: SubCategory,
-              include: [Category],
+              as: "subCategory",
+              map: "subCategoryId",
+              include: [{ model: Category, as: "category", map: "categoryId" }],
             },
           ],
         },
@@ -117,7 +123,7 @@ export const findByKeyword: RequestHandler = async (req, res, next) => {
 export const remove: RequestHandler = async (req, res, next) => {
   const { id } = req.params;
   try {
-    await User.destroy({ where: { id } });
+    await User.destroy({ where: { key: "id", value: id } });
     return res.status(200).json({
       message: "Deleted successfully",
       data: { message: `Delete ID: ${id} is successfully` },
@@ -131,7 +137,7 @@ export const create: RequestHandler = async (req, res, next) => {
   const salt = bcrypt.genSaltSync(10);
   const hashPassword = bcrypt.hashSync(password, salt);
   try {
-    const newItem: User = await User.create({
+    const newItem: any = await User.create({
       email,
       password: hashPassword,
       avatar,
@@ -149,7 +155,9 @@ export const update: RequestHandler = async (req, res, next) => {
   const { email, password, status, resetPasswordStatus, avatar } = req.body;
   const { id } = req.params;
   try {
-    const updated: User | null = await User.findByPk(id);
+    const updated: any = await User.findOne({
+      where: { key: "id", value: id },
+    });
     if (updated) {
       updated.email = email || updated?.email;
       updated.status = status || updated?.status;
@@ -163,7 +171,7 @@ export const update: RequestHandler = async (req, res, next) => {
       } else {
         updated.password = password;
       }
-      await updated.save();
+      await User.update(id, updated);
       return res
         .status(200)
         .json({ message: "Updated successfully", data: updated });
@@ -178,27 +186,30 @@ export const login: RequestHandler = async (req, res) => {
   const { email, password } = req.body;
   try {
     const user = await User.findOne({
-      where: {
-        email,
-      },
+      where: { key: "email", value: email },
       include: [
         {
           model: SubCategory,
           as: "statusObj",
-          include: [Category],
+          map: "status",
+          include: [{ model: Category, as: "category", map: "categoryId" }],
         },
         {
           model: SubCategory,
           as: "resetPasswordStatusObj",
-          include: [Category],
+          map: "resetPasswordStatus",
+          include: [{ model: Category, as: "category", map: "categoryId" }],
         },
         {
           model: Media,
           as: "avatarObj",
+          map: "avatar",
           include: [
             {
               model: SubCategory,
-              include: [Category],
+              as: "subCategory",
+              map: "subCategoryId",
+              include: [{ model: Category, as: "category", map: "categoryId" }],
             },
           ],
         },
@@ -228,18 +239,12 @@ export const signup: RequestHandler = async (req, res) => {
   const hashPassword = bcrypt.hashSync(password, salt);
   try {
     const status: any | null = await SubCategory.findOne({
-      where: Sequelize.where(
-        Sequelize.fn("lower", Sequelize.col("name")),
-        Sequelize.fn("lower", "user: waiting")
-      ),
+      where: { key: "name", value: "user: waiting", like: true },
     });
-    const resetPasswordStatus: SubCategory | null = await SubCategory.findOne({
-      where: Sequelize.where(
-        Sequelize.fn("lower", Sequelize.col("name")),
-        Sequelize.fn("lower", "request: none")
-      ),
+    const resetPasswordStatus: any = await SubCategory.findOne({
+      where: { key: "name", value: "request: none", like: true },
     });
-    const newItem: User = await User.create({
+    const newItem: any = await User.create({
       email,
       password: hashPassword,
       avatar: null,
@@ -256,22 +261,13 @@ export const signup: RequestHandler = async (req, res) => {
 export const requestResetPassword: RequestHandler = async (req, res) => {
   const { email } = req.body;
   try {
-    const user = await User.findOne({
-      where: {
-        email,
-      },
-    });
+    const user = await User.findOne({ where: { key: "email", value: email } });
     if (user) {
-      const resetPasswordStatus: SubCategory | null = await SubCategory.findOne(
-        {
-          where: Sequelize.where(
-            Sequelize.fn("lower", Sequelize.col("name")),
-            Sequelize.fn("lower", "request: waiting")
-          ),
-        }
-      );
+      const resetPasswordStatus: any = await SubCategory.findOne({
+        where: { key: "name", value: "request: waiting", like: true },
+      });
       user.resetPasswordStatus = resetPasswordStatus?.id;
-      await user.save();
+      await User.update(user.id, user);
       return res.status(200).json({
         message: "Your request sent successfully! Please check your inbox",
         data: user,
@@ -286,15 +282,14 @@ export const requestResetPassword: RequestHandler = async (req, res) => {
 export const uploadAvatar: any = async (req: any, res: any) => {
   const { id } = req.params;
   try {
-    const updated: User | null = await User.findByPk(id);
+    const updated: any = await User.findOne({
+      where: { key: "id", value: id },
+    });
     if (updated) {
       const subCategory: any | null = await SubCategory.findOne({
-        where: Sequelize.where(
-          Sequelize.fn("lower", Sequelize.col("name")),
-          Sequelize.fn("lower", "img")
-        ),
+        where: { key: "name", value: "img", like: true },
       });
-      const media: Media = await Media.create({
+      const media: any = await Media.create({
         src: req.file || "",
         enabled: true,
         title: "",
@@ -302,7 +297,7 @@ export const uploadAvatar: any = async (req: any, res: any) => {
         subCategoryId: subCategory?.id,
       });
       updated.avatar = media.id;
-      await updated.save();
+      await SubCategory.update(updated.id, updated);
       return res
         .status(200)
         .json({ message: "Updated avatar successfully", data: updated });
@@ -315,7 +310,9 @@ export const resetPassword: RequestHandler = async (req, res) => {
   const { password, resetPasswordStatus } = req.body;
   const { id } = req.params;
   try {
-    const updated: User | null = await User.findByPk(id);
+    const updated: any = await User.findOne({
+      where: { key: "id", value: id },
+    });
     if (updated) {
       updated.resetPasswordStatus =
         resetPasswordStatus || updated?.resetPasswordStatus;
@@ -326,13 +323,11 @@ export const resetPassword: RequestHandler = async (req, res) => {
       } else {
         updated.password = password;
       }
-      await updated.save();
-      return res
-        .status(200)
-        .json({
-          message: "Reset password successfully. Please send email to user!",
-          data: updated,
-        });
+      await User.update(id, updated);
+      return res.status(200).json({
+        message: "Reset password successfully. Please send email to user!",
+        data: updated,
+      });
     }
   } catch (error) {
     return res.status(500).send(error);

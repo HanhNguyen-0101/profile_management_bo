@@ -1,16 +1,17 @@
 import { RequestHandler } from "express";
-import { SubCategory } from "../models/subCategory";
-import { Op } from "sequelize";
-import { Category } from "../models/category";
-import { Blog } from "../models/blog";
-import { Media } from "../models/media";
-import { Project } from "../models/project";
-import { User } from "../models/user";
+import {
+  SubCategory,
+  Category,
+  Blog,
+  Media,
+  Project,
+  User,
+} from "../services/index.service";
 
 export const getAll: RequestHandler = async (req, res, next) => {
   try {
-    const all: SubCategory[] = await SubCategory.findAll({
-      include: [Category],
+    const all: Array<any> = await SubCategory.findAll({
+      include: [{ model: Category, as: "category", map: "categoryId" }],
     });
     return res.status(200).json({ message: "Fetched successfully", data: all });
   } catch (error) {
@@ -20,8 +21,9 @@ export const getAll: RequestHandler = async (req, res, next) => {
 export const getById: RequestHandler = async (req, res, next) => {
   const { id } = req.params;
   try {
-    const item: SubCategory | null = await SubCategory.findByPk(id, {
-      include: [Category],
+    const item: any = await SubCategory.findOne({
+      include: [{ model: Category, as: "category", map: "categoryId" }],
+      where: { key: "id", value: id },
     });
     return res
       .status(200)
@@ -33,20 +35,12 @@ export const getById: RequestHandler = async (req, res, next) => {
 export const findByKeyword: RequestHandler = async (req, res, next) => {
   const { keyword } = req.params;
   try {
-    const result: SubCategory[] = await SubCategory.findAll({
-      include: [Category],
+    const result: Array<any> = await SubCategory.findAll({
+      include: [{ model: Category, as: "category", map: "categoryId" }],
       where: {
-        [Op.or]: [
-          {
-            name: {
-              [Op.like]: `%${keyword}%`,
-            },
-          },
-          {
-            description: {
-              [Op.like]: `%${keyword}%`,
-            },
-          },
+        or: [
+          { where: { key: "name", value: keyword, like: true } },
+          { where: { key: "description", value: keyword, like: true } },
         ],
       },
     });
@@ -60,12 +54,17 @@ export const findByKeyword: RequestHandler = async (req, res, next) => {
 export const remove: RequestHandler = async (req, res, next) => {
   const { id } = req.params;
   try {
-    await SubCategory.destroy({ where: { id } });
-    await Blog.destroy({ where: { subCategoryId: id } });
-    await Media.destroy({ where: { subCategoryId: id } });
-    await Project.destroy({ where: { subCategoryId: id } });
+    await SubCategory.destroy({ where: { key: "id", value: id } });
+    await Blog.destroy({ where: { key: "subCategoryId", value: id } });
+    await Media.destroy({ where: { key: "subCategoryId", value: id } });
+    await Project.destroy({ where: { key: "subCategoryId", value: id } });
     await User.destroy({
-      where: { [Op.or]: [{ status: id }, { resetPasswordStatus: id }] },
+      where: {
+        or: [
+          { where: { key: "status", value: id } },
+          { where: { key: "resetPasswordStatus", value: id } },
+        ],
+      },
     });
 
     return res.status(200).json({
@@ -81,7 +80,7 @@ export const remove: RequestHandler = async (req, res, next) => {
 export const create: RequestHandler = async (req, res, next) => {
   const { name, description, categoryId } = req.body;
   try {
-    const newItem: SubCategory = await SubCategory.create({
+    const newItem: any = await SubCategory.create({
       name,
       description,
       categoryId,
@@ -97,12 +96,14 @@ export const update: RequestHandler = async (req, res, next) => {
   const { name, description, categoryId } = req.body;
   const { id } = req.params;
   try {
-    const updated: SubCategory | null = await SubCategory.findByPk(id);
+    const updated: any = await SubCategory.findOne({
+      where: { key: "id", value: id },
+    });
     if (updated) {
       updated.name = name || updated?.name;
       updated.description = description || updated?.description;
       updated.categoryId = categoryId || updated?.categoryId;
-      await updated.save();
+      await SubCategory.update(id, updated);
       return res
         .status(200)
         .json({ message: "Updated successfully", data: updated });

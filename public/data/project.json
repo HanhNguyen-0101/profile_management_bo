@@ -1,0 +1,30 @@
+[
+  {
+    "id": 2,
+    "name": "Master Degree of Design",
+    "link": "https://ant.design/components/select",
+    "description": "<p>Bạn không thể đánh lửa nếu chỉ có một hòn đá.</p><p>Người ta đề cao teamwork là một loại kỹ năng cần thiết để hoàn thành những công việc có thể tạo ra được nhiều giá trị cho cộng đồng. Kỹ năng này nói về việc làm thế nào để nhiều cá nhân trong một tổ chức có thể phối hợp và phát huy thế mạnh của nhau, càng gắn bó càng dễ hoàn thành mục tiêu.</p><p>Và thậm chí ngay cả những việc cần tự mình hoàn thành mà không cần làm chung với ai cả thì cũng phải cần kỹ năng teamwork.</p><p>Nhưng nếu đã nói là không có người khác, thì ta sẽ teamwork với ai?</p><h3><img src=\"https://hoang.moe/wp-content/uploads/2022/10/1.png\"></h3><h3>1. Ta teamwork với ai?</h3><p>Một đội nên có 3 người là tốt nhất.</p><p>Để ý quan sát, ta dễ bắt gặp bộ ba xuất hiện ở nhiều nơi trong cuộc sống:</p><ul><li>Vật chất được tạo thành từ nguyên tử với thành phần: Proton, Electron, Neutron</li><li>Thời gian: Quá khứ, Hiện tại, Tương lai</li><li>Phim ảnh: Bao Thanh Thiên, Công Tôn Sách, Triển Chiêu</li><li>Truyện: Harry Potter, Ron, and Hermione</li></ul><p>Vì thế, mình xin tạm tách bản thân ra thành bộ 3 “cái ta” khác nhau, dựa trên sự quan sát và trải nghiệm về những phiên bản thường xuất hiện trong công việc. Đó là:</p><ul><li>Cái ta thích làm – phiên bản làm cái đã, tính sau.</li><li>Cái ta muốn quan sát – phiên bản thích quan sát rồi ngầm đánh giá.</li><li>Cái ta thường suy nghĩ – phiên bản thông thái, nhưng thường lười biếng.</li></ul><p>Bây giờ để có thể phối hợp tốt hơn, hãy cùng tìm hiểu đặc điểm của 3 cái ta này.</p><h3><img src=\"https://hoang.moe/wp-content/uploads/2022/10/2-50x28.png\"></h3><h3>2. Cái ta thích làm</h3><p>Với phương châm “Làm cái đã tính sau”.</p><p>“Cái ta thích làm” là một anh chàng đầy nhiệt huyết, đặc biệt là khi vừa được truyền cảm hứng để làm một việc gì đấy. Anh ta sẽ thường muốn bắt tay vào làm ngay mà không cần hỏi ý kiến của 2 người còn lại.</p><p>Điểm mạnh của anh chàng này đó là ít bị sự trì hoãn chi phối. Nhưng cũng vì vội vàng, chăm chăm lao đầu về đích, anh ta thường dễ mắc những sai lầm đáng tiếc. Rồi mỗi lần như vậy, anh thường phải nghe:</p><p>“Tại sao mày lại làm điều đó chứ? Mày không biết chậm lại suy nghĩ hả?”</p><p>Nếu thường xuyên bị đổ lỗi anh ta sẽ trở nên rụt rè, và bắt đầu trở nên sợ hãi cả nhóm. Rồi đến lúc cần người làm, gọi mãi nhưng anh không dám bước ra.</p><p>Nếu không biết nhận lỗi, chẳng có thứ gì phá hoại nhanh hơn anh ta.</p>",
+    "technical": "[\"html\",\"css\",\"react\"]",
+    "date": "[\"2014-07-16T11:23:37.041Z\", \"2015-08-16T11:23:37.041Z\"]",
+    "members": "5 members includes 1 leader, 2 dev, 2 QC",
+    "images": "[28]",
+    "organizationId": 5,
+    "subCategoryId": 4,
+    "createdAt": "2022-11-24T10:39:45.000Z",
+    "updatedAt": "2022-12-01T10:50:23.000Z"
+  },
+  {
+    "id": 5,
+    "name": "Master Degree of Design",
+    "link": "https://ant.design/components/select",
+    "description": "<p>Bạn không thể đánh lửa nếu chỉ có một hòn đá.</p><p>Người ta đề cao teamwork là một loại kỹ năng cần thiết để hoàn thành những công việc có thể tạo ra được nhiều giá trị cho cộng đồng. Kỹ năng này nói về việc làm thế nào để nhiều cá nhân trong một tổ chức có thể phối hợp và phát huy thế mạnh của nhau, càng gắn bó càng dễ hoàn thành mục tiêu.</p><p>Và thậm chí ngay cả những việc cần tự mình hoàn thành mà không cần làm chung với ai cả thì cũng phải cần kỹ năng teamwork.</p><p>Nhưng nếu đã nói là không có người khác, thì ta sẽ teamwork với ai?</p><h3><img src=\"https://hoang.moe/wp-content/uploads/2022/10/1.png\"></h3><h3>1. Ta teamwork với ai?</h3><p>Một đội nên có 3 người là tốt nhất.</p><p>Để ý quan sát, ta dễ bắt gặp bộ ba xuất hiện ở nhiều nơi trong cuộc sống:</p><ul><li>Vật chất được tạo thành từ nguyên tử với thành phần: Proton, Electron, Neutron</li><li>Thời gian: Quá khứ, Hiện tại, Tương lai</li><li>Phim ảnh: Bao Thanh Thiên, Công Tôn Sách, Triển Chiêu</li><li>Truyện: Harry Potter, Ron, and Hermione</li></ul><p>Vì thế, mình xin tạm tách bản thân ra thành bộ 3 “cái ta” khác nhau, dựa trên sự quan sát và trải nghiệm về những phiên bản thường xuất hiện trong công việc. Đó là:</p><ul><li>Cái ta thích làm – phiên bản làm cái đã, tính sau.</li><li>Cái ta muốn quan sát – phiên bản thích quan sát rồi ngầm đánh giá.</li><li>Cái ta thường suy nghĩ – phiên bản thông thái, nhưng thường lười biếng.</li></ul><p>Bây giờ để có thể phối hợp tốt hơn, hãy cùng tìm hiểu đặc điểm của 3 cái ta này.</p><h3><img src=\"https://hoang.moe/wp-content/uploads/2022/10/2-50x28.png\"></h3><h3>2. Cái ta thích làm</h3><p>Với phương châm “Làm cái đã tính sau”.</p><p>“Cái ta thích làm” là một anh chàng đầy nhiệt huyết, đặc biệt là khi vừa được truyền cảm hứng để làm một việc gì đấy. Anh ta sẽ thường muốn bắt tay vào làm ngay mà không cần hỏi ý kiến của 2 người còn lại.</p><p>Điểm mạnh của anh chàng này đó là ít bị sự trì hoãn chi phối. Nhưng cũng vì vội vàng, chăm chăm lao đầu về đích, anh ta thường dễ mắc những sai lầm đáng tiếc. Rồi mỗi lần như vậy, anh thường phải nghe:</p><p>“Tại sao mày lại làm điều đó chứ? Mày không biết chậm lại suy nghĩ hả?”</p><p>Nếu thường xuyên bị đổ lỗi anh ta sẽ trở nên rụt rè, và bắt đầu trở nên sợ hãi cả nhóm. Rồi đến lúc cần người làm, gọi mãi nhưng anh không dám bước ra.</p><p>Nếu không biết nhận lỗi, chẳng có thứ gì phá hoại nhanh hơn anh ta.</p>",
+    "technical": "[\"html\",\"css\",\"react\"]",
+    "date": "[\"2014-07-16T11:23:37.041Z\", \"2015-08-16T11:23:37.041Z\"]",
+    "members": "5 members includes 1 leader, 2 dev, 2 QC",
+    "images": "[]",
+    "organizationId": 5,
+    "subCategoryId": 4,
+    "createdAt": "2022-12-01T11:32:24.000Z",
+    "updatedAt": "2022-12-01T11:43:52.000Z"
+  }
+]

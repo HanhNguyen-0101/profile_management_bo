@@ -7,10 +7,10 @@ import {
   getById,
   findByKeyword,
 } from "./../controllers/media";
-import { Media } from "../models/media";
 import authenticate from "../middlewares/validate/authenticate";
 import checkExist from "../middlewares/validate/checkExist";
 import uploadImage from "../middlewares/upload/uploadImage";
+import { Media } from "../services/index.service";
 const formidableMiddleware = require("middleware-formidable");
 
 const router = express.Router();
