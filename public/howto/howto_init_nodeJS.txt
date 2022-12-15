@@ -1,0 +1,27 @@
+Init project NodeJS
+
+- yarn init
+- yarn add express mysql2 sequelize
+- yarn add sequelize-cli --dev
+- sequelize init
+- yarn add nodemon --dev
+- add scripts in package.json
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+- yarn add cors bcryptjs jsonwebtoken multer mkdirp (optional)
+- add file .gitignore
+- copy code server.js
+- structure: controllers, middlewares, public, routers, utils (create yourself); config, migrations, models, seeders (auto create when run sequelize init)
+
+* Typescript
+- npm install -g typescript
+- tsc --init
+- npm init
+- outDir: ‘./dist’; rootDir:‘./src’
+- Install sequelize-typescript, reflect-metadata, @types/node
+
+TO START:
+FO: npm start
+BO: npm start
