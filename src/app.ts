@@ -1,9 +1,7 @@
 import express from "express";
-import path from "path";
 import cors from "cors";
 import { json, urlencoded } from "body-parser";
 import rootRoutes from "./routes";
-import connection from "./db/config";
 
 const PORT = 3001;
 
@@ -27,14 +25,6 @@ app.use(
   }
 );
 
-connection
-  .sync()
-  .then(() => {
-    console.log("Database successfully connected");
-  })
-  .catch((err) => {
-    console.log("Error", err);
-  });
 app.listen(PORT, () => {
   console.log(`Server started on port ${PORT}`);
 });

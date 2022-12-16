@@ -1,9 +1,10 @@
 import { RequestHandler } from "express";
+import { IBlog } from "../models/index.model";
 import { Blog, Category, Media, SubCategory } from "../services/index.service";
 
 export const getAll: RequestHandler = async (req, res, next) => {
   try {
-    const all: Array<any> = await Blog.findAll({
+    const all: Array<IBlog> = await Blog.findAll({
       include: [
         {
           model: SubCategory,
@@ -34,7 +35,7 @@ export const getAll: RequestHandler = async (req, res, next) => {
 export const getById: RequestHandler = async (req, res, next) => {
   const { id } = req.params;
   try {
-    const item: any = await Blog.findOne({
+    const item: IBlog = await Blog.findOne({
       where: { key: "id", value: id },
       include: [
         {
@@ -68,7 +69,7 @@ export const getById: RequestHandler = async (req, res, next) => {
 export const findByKeyword: RequestHandler = async (req, res, next) => {
   const { keyword } = req.params;
   try {
-    const result: Array<any> = await Blog.findAll({
+    const result: Array<IBlog> = await Blog.findAll({
       include: [
         {
           model: SubCategory,
@@ -121,7 +122,7 @@ export const create: RequestHandler = async (req, res, next) => {
   const { title, subTitle, description, content, thumnail, subCategoryId } =
     req.body;
   try {
-    const newItem: any = await Blog.create({
+    const newItem: IBlog = await Blog.create({
       title,
       subTitle,
       description,
@@ -141,7 +142,7 @@ export const update: RequestHandler = async (req, res, next) => {
     req.body;
   const { id } = req.params;
   try {
-    const updated: any = await Blog.findOne({
+    const updated: IBlog = await Blog.findOne({
       where: { key: "id", value: id },
     });
     if (updated) {
@@ -165,7 +166,7 @@ export const update: RequestHandler = async (req, res, next) => {
 export const getBySubCategoryId: RequestHandler = async (req, res, next) => {
   const { id } = req.params;
   try {
-    const all: Array<any> = await Blog.findAll({
+    const all: Array<IBlog> = await Blog.findAll({
       where: { key: "subCategoryId", value: id },
       include: [
         {

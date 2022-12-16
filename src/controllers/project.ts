@@ -1,4 +1,5 @@
 import { RequestHandler } from "express";
+import { IProject } from "../models/index.model";
 import {
   Project,
   SubCategory,
@@ -8,7 +9,7 @@ import {
 
 export const getAll: RequestHandler = async (req, res, next) => {
   try {
-    const all: Array<any> = await Project.findAll({
+    const all: Array<IProject> = await Project.findAll({
       include: [
         {
           model: SubCategory,
@@ -31,7 +32,7 @@ export const getAll: RequestHandler = async (req, res, next) => {
 export const getById: RequestHandler = async (req, res, next) => {
   const { id } = req.params;
   try {
-    const item: any = await Project.findOne({
+    const item: IProject = await Project.findOne({
       where: { key: "id", value: id },
       include: [
         {
@@ -57,7 +58,7 @@ export const getById: RequestHandler = async (req, res, next) => {
 export const findByKeyword: RequestHandler = async (req, res, next) => {
   const { keyword } = req.params;
   try {
-    const result: Array<any> = await Project.findAll({
+    const result: Array<IProject> = await Project.findAll({
       include: [
         {
           model: SubCategory,
@@ -110,7 +111,7 @@ export const create: RequestHandler = async (req, res, next) => {
     subCategoryId,
   } = req.body;
   try {
-    const newItem: any = await Project.create({
+    const newItem: IProject = await Project.create({
       name,
       link,
       description,
@@ -142,7 +143,7 @@ export const update: RequestHandler = async (req, res, next) => {
   } = req.body;
   const { id } = req.params;
   try {
-    const updated: any = await Project.findOne({
+    const updated: IProject = await Project.findOne({
       where: { key: "id", value: id },
     });
     if (updated) {

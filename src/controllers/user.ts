@@ -3,10 +3,11 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { User, SubCategory, Media, Category } from "../services/index.service";
 import { SECRET } from "../utils/constants";
+import { IAuth, IMedia, ISubCategory } from "../models/index.model";
 
 export const getAll: RequestHandler = async (req, res, next) => {
   try {
-    const all: Array<any> = await User.findAll({
+    const all: Array<IAuth> = await User.findAll({
       include: [
         {
           model: SubCategory,
@@ -83,7 +84,7 @@ export const getById: RequestHandler = async (req, res, next) => {
 export const findByKeyword: RequestHandler = async (req, res, next) => {
   const { keyword } = req.params;
   try {
-    const result: Array<any> = await User.findAll({
+    const result: Array<IAuth> = await User.findAll({
       where: { key: "email", value: keyword, like: true },
       include: [
         {
@@ -137,7 +138,7 @@ export const create: RequestHandler = async (req, res, next) => {
   const salt = bcrypt.genSaltSync(10);
   const hashPassword = bcrypt.hashSync(password, salt);
   try {
-    const newItem: any = await User.create({
+    const newItem: IAuth = await User.create({
       email,
       password: hashPassword,
       avatar,
@@ -155,7 +156,7 @@ export const update: RequestHandler = async (req, res, next) => {
   const { email, password, status, resetPasswordStatus, avatar } = req.body;
   const { id } = req.params;
   try {
-    const updated: any = await User.findOne({
+    const updated: IAuth = await User.findOne({
       where: { key: "id", value: id },
     });
     if (updated) {
@@ -238,13 +239,13 @@ export const signup: RequestHandler = async (req, res) => {
   const salt = bcrypt.genSaltSync(10);
   const hashPassword = bcrypt.hashSync(password, salt);
   try {
-    const status: any | null = await SubCategory.findOne({
+    const status: ISubCategory = await SubCategory.findOne({
       where: { key: "name", value: "user: waiting", like: true },
     });
-    const resetPasswordStatus: any = await SubCategory.findOne({
+    const resetPasswordStatus: ISubCategory = await SubCategory.findOne({
       where: { key: "name", value: "request: none", like: true },
     });
-    const newItem: any = await User.create({
+    const newItem: IAuth = await User.create({
       email,
       password: hashPassword,
       avatar: null,
@@ -263,7 +264,7 @@ export const requestResetPassword: RequestHandler = async (req, res) => {
   try {
     const user = await User.findOne({ where: { key: "email", value: email } });
     if (user) {
-      const resetPasswordStatus: any = await SubCategory.findOne({
+      const resetPasswordStatus: ISubCategory = await SubCategory.findOne({
         where: { key: "name", value: "request: waiting", like: true },
       });
       user.resetPasswordStatus = resetPasswordStatus?.id;
@@ -279,17 +280,17 @@ export const requestResetPassword: RequestHandler = async (req, res) => {
     return res.status(500).send(error);
   }
 };
-export const uploadAvatar: any = async (req: any, res: any) => {
+export const uploadAvatar: RequestHandler = async (req, res) => {
   const { id } = req.params;
   try {
-    const updated: any = await User.findOne({
+    const updated: IAuth = await User.findOne({
       where: { key: "id", value: id },
     });
     if (updated) {
-      const subCategory: any | null = await SubCategory.findOne({
+      const subCategory: ISubCategory = await SubCategory.findOne({
         where: { key: "name", value: "img", like: true },
       });
-      const media: any = await Media.create({
+      const media: IMedia = await Media.create({
         src: req.file || "",
         enabled: true,
         title: "",
@@ -297,7 +298,7 @@ export const uploadAvatar: any = async (req: any, res: any) => {
         subCategoryId: subCategory?.id,
       });
       updated.avatar = media.id;
-      await SubCategory.update(updated.id, updated);
+      await User.update(updated.id, updated);
       return res
         .status(200)
         .json({ message: "Updated avatar successfully", data: updated });
@@ -310,7 +311,7 @@ export const resetPassword: RequestHandler = async (req, res) => {
   const { password, resetPasswordStatus } = req.body;
   const { id } = req.params;
   try {
-    const updated: any = await User.findOne({
+    const updated: IAuth = await User.findOne({
       where: { key: "id", value: id },
     });
     if (updated) {

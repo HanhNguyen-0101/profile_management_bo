@@ -1,4 +1,5 @@
 import { RequestHandler } from "express";
+import { ISubCategory } from "../models/index.model";
 import {
   SubCategory,
   Category,
@@ -10,7 +11,7 @@ import {
 
 export const getAll: RequestHandler = async (req, res, next) => {
   try {
-    const all: Array<any> = await SubCategory.findAll({
+    const all: Array<ISubCategory> = await SubCategory.findAll({
       include: [{ model: Category, as: "category", map: "categoryId" }],
     });
     return res.status(200).json({ message: "Fetched successfully", data: all });
@@ -21,7 +22,7 @@ export const getAll: RequestHandler = async (req, res, next) => {
 export const getById: RequestHandler = async (req, res, next) => {
   const { id } = req.params;
   try {
-    const item: any = await SubCategory.findOne({
+    const item: ISubCategory = await SubCategory.findOne({
       include: [{ model: Category, as: "category", map: "categoryId" }],
       where: { key: "id", value: id },
     });
@@ -35,7 +36,7 @@ export const getById: RequestHandler = async (req, res, next) => {
 export const findByKeyword: RequestHandler = async (req, res, next) => {
   const { keyword } = req.params;
   try {
-    const result: Array<any> = await SubCategory.findAll({
+    const result: Array<ISubCategory> = await SubCategory.findAll({
       include: [{ model: Category, as: "category", map: "categoryId" }],
       where: {
         or: [
@@ -80,7 +81,7 @@ export const remove: RequestHandler = async (req, res, next) => {
 export const create: RequestHandler = async (req, res, next) => {
   const { name, description, categoryId } = req.body;
   try {
-    const newItem: any = await SubCategory.create({
+    const newItem: ISubCategory = await SubCategory.create({
       name,
       description,
       categoryId,
@@ -96,7 +97,7 @@ export const update: RequestHandler = async (req, res, next) => {
   const { name, description, categoryId } = req.body;
   const { id } = req.params;
   try {
-    const updated: any = await SubCategory.findOne({
+    const updated: ISubCategory = await SubCategory.findOne({
       where: { key: "id", value: id },
     });
     if (updated) {

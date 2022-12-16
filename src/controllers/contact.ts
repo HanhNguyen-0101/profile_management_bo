@@ -1,9 +1,10 @@
 import { RequestHandler } from "express";
+import { IContact } from "../models/index.model";
 import { Contact } from "../services/index.service";
 
 export const getAll: RequestHandler = async (req, res, next) => {
   try {
-    const all: Array<any> = await Contact.findAll({});
+    const all: Array<IContact> = await Contact.findAll({});
     return res.status(200).json({ message: "Fetched successfully", data: all });
   } catch (error) {
     return res.status(500).send(error);
@@ -12,7 +13,7 @@ export const getAll: RequestHandler = async (req, res, next) => {
 export const getById: RequestHandler = async (req, res, next) => {
   const { id } = req.params;
   try {
-    const item: any = await Contact.findOne({
+    const item: IContact = await Contact.findOne({
       where: { key: "id", value: id },
     });
     return res
@@ -25,7 +26,7 @@ export const getById: RequestHandler = async (req, res, next) => {
 export const findByKeyword: RequestHandler = async (req, res, next) => {
   const { keyword } = req.params;
   try {
-    const result: Array<any> = await Contact.findAll({
+    const result: Array<IContact> = await Contact.findAll({
       where: { key: "name", value: keyword, like: true },
     });
     return res
@@ -50,7 +51,7 @@ export const remove: RequestHandler = async (req, res, next) => {
 export const create: RequestHandler = async (req, res, next) => {
   const { name, content } = req.body;
   try {
-    const newItem: any = await Contact.create({
+    const newItem: IContact = await Contact.create({
       name,
       content,
     });
@@ -65,13 +66,13 @@ export const update: RequestHandler = async (req, res, next) => {
   const { name, content } = req.body;
   const { id } = req.params;
   try {
-    const updated: any = await Contact.findOne({
+    const updated: IContact = await Contact.findOne({
       where: { key: "id", value: id },
     });
     if (updated) {
       updated.name = name || updated?.name;
       updated.content = content || updated?.content;
-      await updated.save();
+      await Contact.update(id, updated);
       return res
         .status(200)
         .json({ message: "Updated successfully", data: updated });

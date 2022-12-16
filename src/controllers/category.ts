@@ -1,9 +1,10 @@
 import { RequestHandler } from "express";
+import { ICategory } from "../models/index.model";
 import { Category, SubCategory } from "../services/index.service";
 
 export const getAll: RequestHandler = async (req, res, next) => {
   try {
-    const all: Array<any> = await Category.findAll({});
+    const all: Array<ICategory> = await Category.findAll({});
     return res.status(200).json({ message: "Fetched successfully", data: all });
   } catch (error) {
     return res.status(500).send(error);
@@ -12,7 +13,7 @@ export const getAll: RequestHandler = async (req, res, next) => {
 export const getById: RequestHandler = async (req, res, next) => {
   const { id } = req.params;
   try {
-    const item: any = await Category.findOne({
+    const item: ICategory = await Category.findOne({
       where: { key: "id", value: id },
     });
     return res
@@ -25,7 +26,7 @@ export const getById: RequestHandler = async (req, res, next) => {
 export const findByKeyword: RequestHandler = async (req, res, next) => {
   const { keyword } = req.params;
   try {
-    const result: Array<any> = await Category.findAll({
+    const result: Array<ICategory> = await Category.findAll({
       where: {
         or: [
           { where: { key: "name", value: keyword, like: true } },
@@ -59,7 +60,7 @@ export const remove: RequestHandler = async (req, res, next) => {
 export const create: RequestHandler = async (req, res, next) => {
   const { name, description } = req.body;
   try {
-    const newItem: any = await Category.create({
+    const newItem: ICategory = await Category.create({
       name,
       description,
     });
@@ -74,13 +75,13 @@ export const update: RequestHandler = async (req, res, next) => {
   const { name, description } = req.body;
   const { id } = req.params;
   try {
-    const updated: any = await Category.findOne({
+    const updated: ICategory = await Category.findOne({
       where: { key: "id", value: id },
     });
-    if (updated) {
+  if (updated) {
       updated.name = name || updated?.name;
       updated.description = description || updated?.description;
-      await updated.save();
+      await Category.update(id, updated);
       return res
         .status(200)
         .json({ message: "Updated successfully", data: updated });
@@ -88,6 +89,6 @@ export const update: RequestHandler = async (req, res, next) => {
       create;
     }
   } catch (error) {
-    return res.status(500).send(error);
+  return res.status(500).send(error);
   }
 };

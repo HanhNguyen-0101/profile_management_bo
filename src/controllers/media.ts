@@ -1,4 +1,5 @@
 import { RequestHandler } from "express";
+import { IMedia, IProject } from "../models/index.model";
 import {
   Media,
   SubCategory,
@@ -10,7 +11,7 @@ import {
 
 export const getAll: RequestHandler = async (req, res, next) => {
   try {
-    const all: Array<any> = await Media.findAll({
+    const all: Array<IMedia> = await Media.findAll({
       include: [
         {
           model: SubCategory,
@@ -28,7 +29,7 @@ export const getAll: RequestHandler = async (req, res, next) => {
 export const getById: RequestHandler = async (req, res, next) => {
   const { id } = req.params;
   try {
-    const item: any = await Media.findOne({
+    const item: IMedia = await Media.findOne({
       where: { key: "id", value: id },
       include: [
         {
@@ -49,7 +50,7 @@ export const getById: RequestHandler = async (req, res, next) => {
 export const findByKeyword: RequestHandler = async (req, res, next) => {
   const { keyword } = req.params;
   try {
-    const result: Array<any> = await Media.findAll({
+    const result: Array<IMedia> = await Media.findAll({
       include: [
         {
           model: SubCategory,
@@ -81,7 +82,7 @@ export const remove: RequestHandler = async (req, res, next) => {
     const projects = await Project.findAll({
       where: { key: "images", value: id, like: true },
     });
-    projects?.map(async (p: any) => {
+    projects?.map(async (p: IProject) => {
       const project = await Project.findOne({
         where: { key: "id", value: p.id },
       });
@@ -96,7 +97,7 @@ export const remove: RequestHandler = async (req, res, next) => {
           arr.splice(index, 1);
         }
         project.images = arr.length > 0 ? JSON.stringify(arr) : "";
-        await Project.update(project);
+        await Project.update(project.id, project);
       }
     });
     return res.status(200).json({
@@ -109,10 +110,10 @@ export const remove: RequestHandler = async (req, res, next) => {
     return res.status(500).send(error);
   }
 };
-export const create: any = async (req: any, res: any, next: any) => {
+export const create: RequestHandler = async (req: any, res: any) => {
   const { enabled, title, description, subCategoryId } = req.fields;
   try {
-    const newItem: any = await Media.create({
+    const newItem: IMedia = await Media.create({
       src: req.file || "",
       enabled: enabled === "true",
       title,
@@ -126,11 +127,11 @@ export const create: any = async (req: any, res: any, next: any) => {
     return res.status(500).send(error);
   }
 };
-export const update: any = async (req: any, res: any, next: any) => {
+export const update: RequestHandler = async (req: any, res: any) => {
   const { enabled, title, description, subCategoryId } = req.fields;
   const { id } = req.params;
   try {
-    const updated: any = await Media.findOne({
+    const updated: IMedia = await Media.findOne({
       where: { key: "id", value: id },
     });
     if (updated) {

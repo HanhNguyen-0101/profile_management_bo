@@ -1,9 +1,10 @@
 import { RequestHandler } from "express";
+import { IOrganization } from "../models/index.model";
 import { Organization, Project } from "../services/index.service";
 
 export const getAll: RequestHandler = async (req, res, next) => {
   try {
-    const all: Array<any> = await Organization.findAll({});
+    const all: Array<IOrganization> = await Organization.findAll({});
     return res.status(200).json({ message: "Fetched successfully", data: all });
   } catch (error) {
     return res.status(500).send(error);
@@ -12,7 +13,7 @@ export const getAll: RequestHandler = async (req, res, next) => {
 export const getById: RequestHandler = async (req, res, next) => {
   const { id } = req.params;
   try {
-    const item: any = await Organization.findOne({
+    const item: IOrganization = await Organization.findOne({
       where: { key: "id", value: id },
     });
     return res
@@ -25,7 +26,7 @@ export const getById: RequestHandler = async (req, res, next) => {
 export const findByKeyword: RequestHandler = async (req, res, next) => {
   const { keyword } = req.params;
   try {
-    const result: Array<any> = await Organization.findAll({
+    const result: Array<IOrganization> = await Organization.findAll({
       where: {
         or: [
           { where: { key: "name", value: keyword, like: true } },
@@ -59,7 +60,7 @@ export const remove: RequestHandler = async (req, res, next) => {
 export const create: RequestHandler = async (req, res, next) => {
   const { name, description } = req.body;
   try {
-    const newItem: any = await Organization.create({
+    const newItem: IOrganization = await Organization.create({
       name,
       description,
     });
@@ -74,7 +75,7 @@ export const update: RequestHandler = async (req, res, next) => {
   const { name, description } = req.body;
   const { id } = req.params;
   try {
-    const updated: any = await Organization.findOne({
+    const updated: IOrganization = await Organization.findOne({
       where: { key: "id", value: id },
     });
     if (updated) {

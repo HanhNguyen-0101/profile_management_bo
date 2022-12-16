@@ -37,7 +37,7 @@ const findAll = async (
       for (let i = 0; i < dataFirst.length; i++) {
         for (let index = 0; index < include.length; index++) {
           const { model, as, map } = include[index];
-          const objItem = {
+          const objItem: any = {
             where: {
               key: "id",
               value: dataFirst[i][map],
@@ -58,7 +58,7 @@ const findAll = async (
     let result = [...dataFirst];
     if (where) {
       const { key, value, like, or, and } = where;
-      let dataSecond;
+      let dataSecond: Array<any>;
       if (or || and) {
         if (or) {
           dataSecond = [];
@@ -70,7 +70,7 @@ const findAll = async (
               or[ixd].where.and = and;
             }
             const asc = await findAll(url, or[ixd]);
-            lodash.map(asc, (v) => {
+            lodash.map(asc, (v: any) => {
               const pos = dataSecond.findIndex((b) => b.id === v.id);
               if (pos === -1) {
                 dataSecond.push(v);
@@ -93,8 +93,8 @@ const findAll = async (
             dataSecond.push(...asc);
           }
 
-          let resultF = [];
-          lodash.map(dataSecond, (f) => {
+          let resultF: Array<any> = [];
+          lodash.map(dataSecond, (f: any) => {
             if (count_element_in_array(dataSecond, f) >= and.length) {
               const pos = resultF.findIndex((b) => b.id === f.id);
               if (pos === -1) {
@@ -106,7 +106,7 @@ const findAll = async (
           result = [...resultF];
         }
       } else {
-        result = lodash.filter(dataFirst, (i) => {
+        result = lodash.filter(dataFirst, (i: any) => {
           // Convert key object
           let ckey = i;
           if (key.includes(".")) {
@@ -136,12 +136,12 @@ const findAll = async (
   }
 };
 
-const findOne = async (url, obj) => {
+const findOne = async (url: string, obj: { where: any; include: any }) => {
   const data = await getData(url);
   const { where, include } = obj;
   const { key, value, like, or, and } = where;
 
-  let itemFound, dataSecond;
+  let itemFound, dataSecond: Array<any>;
   if (or || and) {
     if (or) {
       dataSecond = [];
@@ -150,8 +150,8 @@ const findOne = async (url, obj) => {
           or[ixd].where.and = and;
         }
         const asc = await findAll(url, or[ixd]);
-        lodash.map(asc, (v) => {
-          const pos = dataSecond.findIndex((b) => b.id === v.id);
+        lodash.map(asc, (v: any) => {
+          const pos = dataSecond.findIndex((b: any) => b.id === v.id);
           if (pos === -1) {
             dataSecond.push(v);
           }
@@ -169,8 +169,8 @@ const findOne = async (url, obj) => {
         const asc = await findAll(url, and[ixd]);
         dataSecond.push(...asc);
       }
-      let resultF = [];
-      lodash.map(dataSecond, (f) => {
+      let resultF: Array<any> = [];
+      lodash.map(dataSecond, (f: any) => {
         if (count_element_in_array(dataSecond, f) >= and.length) {
           const pos = resultF.findIndex((b) => b.id === f.id);
           if (pos === -1) {
@@ -184,11 +184,11 @@ const findOne = async (url, obj) => {
     }
   } else {
     if (like) {
-      itemFound = lodash.find(data, (i) =>
-        i[key].toString.toLowerCase().includes(value.toString().toLowerCase())
-      );
+      itemFound = lodash.find(data, (i: any) => {
+        return i[key].toString().toLowerCase().includes(value.toString().toLowerCase())
+      });
     } else {
-      itemFound = lodash.find(data, (i) => i[key] == value);
+      itemFound = lodash.find(data, (i: any) => i[key] == value);
     }
   }
   if (itemFound) {
@@ -196,7 +196,7 @@ const findOne = async (url, obj) => {
       let item;
       for (let i = 0; i < include.length; i++) {
         const { model, as, map } = include[i];
-        const objItem = {
+        const objItem: any = {
           where: {
             key: "id",
             value: itemFound[map],
